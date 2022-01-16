@@ -24,17 +24,18 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_CODE = 1;
     static final int REQUEST_CODE_B = 4;
     private final int MY_REQUEST_LOCATION_PERMISSION = 1;
+    public static boolean start_run = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // TODO add a notification
-
+        Log.d("MDP", "onCreate");
         //String for list of details of run
         String[] details = new String[]{
                 "All your runs",
-                "How far you have run today", "How much you have improved?", "Your best time"
+                "How far was my last run", "Furthest distance ran", "Your best time"
         };
         //finding view of the details list
         detailList = (ListView) findViewById(R.id.details);
@@ -52,10 +53,10 @@ public class MainActivity extends AppCompatActivity {
                 //phrases
                 if(detailPhrase.equals("All your runs"))
                     phraseKey = "all";
-                else if(detailPhrase.equals("How far you have run today"))
+                else if(detailPhrase.equals("How far was my last run"))
                     phraseKey = "far";
-                else if(detailPhrase.equals("How much you have improved?"))
-                    phraseKey = "improved";
+                else if(detailPhrase.equals("Furthest distance ran"))
+                    phraseKey = "distance";
                 else if(detailPhrase.equals("Your best time"))
                     phraseKey = "best";
 
@@ -113,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void startRun(){
         Intent intent = new Intent(MainActivity.this, RunTracker.class);
+        start_run = true;
         startActivityForResult(intent, REQUEST_CODE);
     }
 

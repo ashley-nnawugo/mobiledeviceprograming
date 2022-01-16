@@ -23,7 +23,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
                     int version) {
         super(context, DATABASE_NAME, factory, version);
-        // TODO change class to your own
         contentResolver = context.getContentResolver();
         Log.d("g53mdp", "DBHelper");
     }
@@ -31,7 +30,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d("g53mdp", "onCreate");
-        // TODO Auto-generated method stub
 
         db.execSQL("CREATE TABLE runLogs (" +
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT ," +

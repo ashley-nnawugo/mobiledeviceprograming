@@ -7,6 +7,8 @@
     android:layout_marginLeft="1dp"
     android:layout_marginTop="1dp"
     android:layout_marginBottom="1dp"
+    android:background="#00000000"
+    android:hapticFeedbackEnabled="false"
     android:orientation="vertical">
 
     <TextView
