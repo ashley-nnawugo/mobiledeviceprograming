@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,15 +22,18 @@ public class MainActivity extends AppCompatActivity {
 
     ListView detailList;
     static final int REQUEST_CODE = 1;
+    static final int REQUEST_CODE_B = 4;
     private final int MY_REQUEST_LOCATION_PERMISSION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // TODO add a notification
 
         //String for list of details of run
         String[] details = new String[]{
+                "All your runs",
                 "How far you have run today", "How much you have improved?", "Your best time"
         };
         //finding view of the details list
@@ -40,10 +44,29 @@ public class MainActivity extends AppCompatActivity {
         detailList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String phraseKey = "all";
                 String detailPhrase = (String) detailList.getItemAtPosition(position);
             /* TODO implement best run, how much one has improved, how far one has ran
                 TODO maybe in a new activity.
              */
+                //phrases
+                if(detailPhrase.equals("All your runs"))
+                    phraseKey = "all";
+                else if(detailPhrase.equals("How far you have run today"))
+                    phraseKey = "far";
+                else if(detailPhrase.equals("How much you have improved?"))
+                    phraseKey = "improved";
+                else if(detailPhrase.equals("Your best time"))
+                    phraseKey = "best";
+
+                Bundle bundle = new Bundle();
+                bundle.putString("key", phraseKey);
+
+                Intent intent = new Intent(MainActivity.this, ContentUser.class);
+                intent.putExtras(bundle);
+                startActivityForResult(intent, REQUEST_CODE_B);
+                //finish();
+
             }
 
         });
