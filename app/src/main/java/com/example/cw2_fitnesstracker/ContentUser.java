@@ -6,6 +6,8 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
@@ -22,8 +24,6 @@ public class ContentUser extends AppCompatActivity {
     Handler h = new Handler();
     DBHelper dbHelper;
 
-
-    //TODO raw query for best time, and stuff
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,6 +183,13 @@ public class ContentUser extends AppCompatActivity {
             alertDialog.setIcon(android.R.drawable.ic_menu_compass);
             alertDialog.setTitle("Best time");
             alertDialog.setMessage("Date: " + date +"\n" + "Time: " + durationTime + "\n"+ "Speed: " + speed+" km/h" + "\n"+ "Distance: " + distance +" Metres" );
+            alertDialog.setButton(Dialog.BUTTON_NEUTRAL,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
             alertDialog.show();
 
         } catch (Exception e) {
@@ -255,6 +262,13 @@ public class ContentUser extends AppCompatActivity {
             alertDialog.setIcon(android.R.drawable.ic_menu_mylocation);
             alertDialog.setTitle("Longest Distance");
             alertDialog.setMessage("Date: " + date +"\n" + "Time: " + durationTime + "\n"+ "Speed: " + speed+" km/h" + "\n"+ "Distance: " + distance +" Metres" );
+            alertDialog.setButton(Dialog.BUTTON_POSITIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
             alertDialog.show();
             //Log.d("validity", String.valueOf(x));
 
@@ -331,7 +345,13 @@ public class ContentUser extends AppCompatActivity {
             alertDialog.setIcon(android.R.drawable.ic_menu_mylocation);
             alertDialog.setTitle("Last Run");
             alertDialog.setMessage("Date: " + date +"\n" + "Time: " + durationTime + "\n"+ "Speed: " + speed+" km/h" + "\n"+ "Distance: " + distance +" Metres" );
-           ;
+            alertDialog.setButton(Dialog.BUTTON_NEGATIVE,"OK",new DialogInterface.OnClickListener(){
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    alertDialog.dismiss();
+                }
+            });
             alertDialog.show();
             //Log.d("validity", String.valueOf(x));
 
@@ -347,4 +367,5 @@ public class ContentUser extends AppCompatActivity {
         Log.d("Destroyed", "End of lifecycle");
         super.onDestroy();
     }
+
 }

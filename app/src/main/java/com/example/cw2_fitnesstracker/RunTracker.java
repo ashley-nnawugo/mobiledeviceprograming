@@ -66,14 +66,16 @@ public class RunTracker extends AppCompatActivity {
         public void onServiceConnected(ComponentName name, IBinder service){
             myService = (TrackerService.MyBinder) service;
             myService.registerCallback(callback);
+            Log.d("connection:", "connected");
             //status = myService.getStatus();
-            Log.d("status", String.valueOf(status));
+            //Log.d("status", String.valueOf(status));
             if(MainActivity.start_run == true)
                 myService.restartRun();
 
         }
         @Override
         public void onServiceDisconnected(ComponentName name){
+            Log.d("connection:", "disconnected");
             myService.unregisteredCallback(callback);
             myService = null;
         }
@@ -94,7 +96,7 @@ public class RunTracker extends AppCompatActivity {
             kilometres_ph = ms_to_kmh(speed);
             TextView time_view = (TextView) findViewById(R.id.textView);
             time_string = timeStandardisation(duration);
-            time_view.setText(String.format("Time:"+time_string + "\n" +"Total distance: %d M" + "\nSpeed: %.2f km/h", distance,kilometres_ph));
+            time_view.setText(String.format("Time: "+time_string + "\n" +"Total distance: %d M" + "\nSpeed: %.2f km/h", distance,kilometres_ph));
             total_time = time_string;
 
 
@@ -124,7 +126,6 @@ public class RunTracker extends AppCompatActivity {
 
 
      */
-    //TODO ADD HOVER OVER MESSAGE
     //Ends run and saves data to the database
     public void onEnd(View v){
         String rating = "Comment here";
@@ -161,6 +162,7 @@ public class RunTracker extends AppCompatActivity {
             //this sets run to false after end of activity.
             MainActivity.start_run = false;
             //ends activity after button is clicked
+
             finish();
         }
     }
@@ -172,9 +174,8 @@ public class RunTracker extends AppCompatActivity {
         int minutes = (seconds % 3600)/60;
         int second = seconds % 60;
 
-        String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, second);
         //Log.d("time", timeFormatted);
-        return timeFormatted;
+        return String.format("%02d:%02d:%02d", hours, minutes, second);
     }
 
     //this changes metres per second to kilometres per hour
@@ -183,8 +184,7 @@ public class RunTracker extends AppCompatActivity {
         float kmh = 0;
         float conversion = (60 * 60);
         float thousand = 1000;
-        float float_speed = speed;
-        kmh = float_speed * conversion/thousand;
+        kmh = (float) speed * conversion/thousand;
         return kmh;
     }
 }

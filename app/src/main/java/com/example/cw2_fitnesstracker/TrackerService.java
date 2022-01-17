@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -132,9 +133,7 @@ public class TrackerService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-        // TODO: Return the communication channel to the service.
 
-       // throw new UnsupportedOperationException("Not yet implemented");
         return new MyBinder();
     }
 
@@ -192,7 +191,6 @@ public class TrackerService extends Service {
     private void doCallbacks(int speed, int duration, int distance, Location new_location){
         final int n = remoteCallbackList.beginBroadcast();
         for(int i = 0; i < n; i++){
-            // TODO CHANGE VARIABLES
             remoteCallbackList.getBroadcastItem(i).callback.runCounter(speed,duration, distance);
 
         }
@@ -217,16 +215,17 @@ public class TrackerService extends Service {
 
         }
 
+        //Notification to show that application is in use
         Intent Notif_intent = new Intent(TrackerService.this, MainActivity.class);
         Notif_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, Notif_intent,0);
 
 
-        //TODO see if you can make it replay live data
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, CHANEL_ID);
-        mBuilder.setSmallIcon(android.R.drawable.ic_media_play);
+        mBuilder.setSmallIcon(android.R.drawable.presence_online);
         mBuilder.setContentTitle("Fitness Tracker");
-        mBuilder.setContentText("Time:" + time_format +" distance: " + String.valueOf(total_distance));
+        mBuilder.setContentText("Fitness Tracker is tracking activity");
+        mBuilder.setLargeIcon(BitmapFactory.decodeResource(getResources(), android.R.drawable.ic_menu_myplaces));
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
         startForeground(NOTIFICATION_ID,mBuilder.build());
@@ -271,5 +270,18 @@ public class TrackerService extends Service {
 
         String timeFormatted = String.format("%02d:%02d:%02d", hours, minutes, second);
         return timeFormatted;
+    }
+    @Override
+    public void onDestroy(){
+        Log.d("onDestroy","lifecycle");
+        //stops the notification
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+        notificationManager.cancel(NOTIFICATION_ID);
+        //stops foregrounding
+        stopForeground(true);
+        //stops running of duration
+        counter.running = false;
+        super.onDestroy();
     }
 }

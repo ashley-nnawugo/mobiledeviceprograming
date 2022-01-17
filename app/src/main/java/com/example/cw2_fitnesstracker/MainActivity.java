@@ -30,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // TODO add a notification
+
+
         Log.d("MDP", "onCreate");
         //String for list of details of run
         String[] details = new String[]{
@@ -47,9 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String phraseKey = "all";
                 String detailPhrase = (String) detailList.getItemAtPosition(position);
-            /* TODO implement best run, how much one has improved, how far one has ran
-                TODO maybe in a new activity.
-             */
+
                 //phrases
                 if(detailPhrase.equals("All your runs"))
                     phraseKey = "all";
@@ -66,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this, ContentUser.class);
                 intent.putExtras(bundle);
                 startActivityForResult(intent, REQUEST_CODE_B);
-                //finish();
+
 
             }
 

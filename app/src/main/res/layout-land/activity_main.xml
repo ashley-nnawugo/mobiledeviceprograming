@@ -13,9 +13,9 @@
         style="@style/Widget.AppCompat.Button"
         android:layout_width="134dp"
         android:layout_height="54dp"
-        android:layout_marginStart="136dp"
-        android:layout_marginLeft="136dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginStart="468dp"
+        android:layout_marginLeft="468dp"
+        android:layout_marginTop="192dp"
         android:onClick="onRun"
         android:text="Start Run"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -24,8 +24,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
-        android:layout_width="357dp"
-        android:layout_height="243dp"
+        android:layout_width="312dp"
+        android:layout_height="241dp"
         android:layout_marginStart="48dp"
         android:layout_marginLeft="48dp"
         android:layout_marginBottom="56dp"
